@@ -7,13 +7,10 @@ import java.util.Arrays;
  * Hello world!
  *
  */
-public class App {
+public class App 
+{
     public static void main( String[] args ) {
-        App app = new App();
-        LinkedList<Integer> list = new LinkedList<>(Arrays.asList(5, 4, 3, 2, 1));
-        LinkedList<Integer> sortedList = app.mergeSort(list);
-        System.out.println(sortedList.toString());
-
+        System.out.println( "Hello World!" );
     }
 
     /**
@@ -85,19 +82,39 @@ public class App {
         mergeSort(list, start, half);
         mergeSort(list, half, end);
 
-        int mergedPosition = start;
         int lhsPosition = start;
         int rhsPosition = half;
 
-        while (mergedPosition < end) {
+        /**
+        * This loop is part of the in-place merge sort algorithm. It compares elements 
+        * from the left half and the right half of the list and ensures they are merged 
+        * in sorted order directly within the list. The merging continues as long as 
+        * there are unprocessed elements in both halves.
+        *
+        * The loop will iterate under the following conditions:
+        *
+        * 1. lhsPosition < rhsPosition: 
+        *    - Ensures that we are still processing elements in the left half that could 
+        *      potentially need to be swapped with elements from the right half. 
+        *    - If lhsPosition == rhsPosition, it means all elements in the left 
+        *      half have been processed, and the loop can stop.
+        *
+        * 2. rhsPosition < end: 
+        *    - Ensures that there are still unprocessed elements in the right half of the list.
+        *    - If rhsPosition == end, it means the right half is fully processed, 
+        *      and the loop can stop.
+        *
+        * The loop continues until one of these conditions is no longer met, at which 
+        * point all elements that needed to be merged have been handled.
+        *
+        */
+        while (lhsPosition < rhsPosition && rhsPosition < end) {
             if (list.get(lhsPosition) < list.get(rhsPosition)) {
-                mergedPosition += 1;
                 lhsPosition += 1;
             } else {
                 Integer element = list.remove(rhsPosition);
-                list.add(mergedPosition, element);
+                list.add(lhsPosition, element);
 
-                mergedPosition += 1;
                 lhsPosition += 1;
                 rhsPosition += 1;
             }
